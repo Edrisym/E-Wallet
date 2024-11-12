@@ -1,42 +1,37 @@
-using FluentAssertions;
-
 namespace Wallet_Tests;
 
 public class Wallet_Domain_Tests
 {
+    //decimal.FromOACurrency()
     // TODO -- testing steps
     //Arrange & Act 
-    //assert
+    //Assert
 
     [Fact]
     public void Should_Throw_Exception_If_Balance_Is_Negative()
     {
         var balance = -0.75m;
-        var guidId = Guid.NewGuid();
-        
-        var walletCreation = () => new Wallet(guidId, balance);
-        
+        var currency = Currency.Create("USD", "United States Dollar", 1.0m);
+        var walletCreation = () => Wallet.Create(balance, currency);
+
         walletCreation.Should().ThrowExactly<NegativeBalanceException>();
     }
-}
 
-public class Wallet
-{
-    public Wallet()
+
+    [Fact]
+    public void Should_Set_Initial_Balance_To_One_Dollar_When_Currency_Is_USD()
     {
+        var currency = Currency.Create("USD", "United States Dollar", 0.99m);
+
+        var walletCreation = () => Wallet.Create(0.1m, currency);
+
+        walletCreation.Should().ThrowExactly<InvalidCurrencyRatioException>();
     }
 
-    public Guid Id { get; private set; }
-    public decimal Balance { get; private set; }
-
-    public Wallet(Guid id, decimal balance)
+    [Fact]
+    public void Should_Throw_Exception_If_No_Default_Is_Set()
     {
-        if (decimal.IsNegative(balance))
-        {
-            NegativeBalanceException.Throw(balance);
-        }
-
-        Id = id;
-        Balance = balance;
+        var walletCreation = () => Wallet.Create(0.1m, null!);
+        walletCreation.Should().ThrowExactly<ArgumentNullException>();
     }
 }
