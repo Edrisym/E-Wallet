@@ -1,6 +1,4 @@
-using System.Diagnostics.CodeAnalysis;
-
-namespace Wallet_Tests;
+namespace Wallet_Tests.Exceptions;
 
 public class NegativeBalanceException : Exception
 {
