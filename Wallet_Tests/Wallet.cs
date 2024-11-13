@@ -9,6 +9,7 @@ public class Wallet
     {
     }
 
+    private const decimal InitialBalance = 1.0m;
     public Guid Id { get; private set; }
     public decimal Balance { get; private set; }
 
@@ -16,10 +17,18 @@ public class Wallet
 
     public static Wallet Create(decimal balance, Currency currency)
     {
-        if (decimal.IsNegative(balance)) NegativeBalanceException.Throw(balance);
+        if (decimal.IsNegative(balance))
+        {
+            NegativeBalanceException.Throw(balance);
+        }
+        else if (InitialBalance > balance)
+        {
+            InsufficientInitialBalanceException.Throw(balance);
+        }
+
         ArgumentNullException.ThrowIfNull(currency);
         if (!IsValidRatio(currency)) InvalidCurrencyRatioException.Throw(currency.Ratio);
-        
+
         return new Wallet
         {
             Id = Guid.NewGuid(),

@@ -23,15 +23,24 @@ public class Wallet_Domain_Tests
     {
         var currency = Currency.Create("USD", "United States Dollar", 0.99m);
 
-        var walletCreation = () => Wallet.Create(0.1m, currency);
+        var walletCreation = () => Wallet.Create(1.0m, currency);
 
         walletCreation.Should().ThrowExactly<InvalidCurrencyRatioException>();
     }
 
     [Fact]
-    public void Should_Throw_Exception_If_No_Default_Is_Set()
+    public void Should_Throw_Exception_If_No_Default_Currency_Is_Set()
     {
-        var walletCreation = () => Wallet.Create(0.1m, null!);
+        var walletCreation = () => Wallet.Create(1.0m, null!);
         walletCreation.Should().ThrowExactly<ArgumentNullException>();
+    }
+
+    [Theory]
+    [InlineData("USD", "United States Dollar", 0.99)]
+    public void Should_Throw_Exception_If_InitialBalance_Is_Null(string code, string name, decimal ratio)
+    {
+        var currency = Currency.Create(code, name, ratio);
+        var walletCreation = () => Wallet.Create(0.0m, currency);
+        walletCreation.Should().ThrowExactly<InsufficientInitialBalanceException>();
     }
 }
