@@ -38,16 +38,15 @@ public class Wallet
     }
 
 
-    //public void Deposit(decimal amount)
-    // {
-    //     //TODO
-    //     if (decimal.IsNegative(balance))
-    //     {
-    //         NegativeBalanceException.Throw(balance);
-    //     }
-    //
-    //     Balance += amount;
-    // }
+    public void Deposit(decimal amount)
+    {
+        if (decimal.IsNegative(amount) || amount == decimal.Zero)
+        {
+            NegativeBalanceException.Throw(amount);
+        }
+
+        Balance += amount;
+    }
 
     public void Withdraw(decimal amount)
     {
@@ -61,6 +60,6 @@ public class Wallet
 
     private static bool IsValidRatio(Currency currency)
     {
-        return decimal.IsPositive(currency.Ratio) && decimal.Equals(currency.Ratio, 1.0m);
+        return decimal.IsPositive(currency.Ratio) && currency.Ratio > 1.0m;
     }
 }
