@@ -37,10 +37,27 @@ public class Wallet_Domain_Tests
 
     [Theory]
     [InlineData("USD", "United States Dollar", 0.99)]
-    public void Should_Throw_Exception_If_InitialBalance_Is_Null(string code, string name, decimal ratio)
+    public void Should_Throw_Exception_If_InitialBalance_Is_Under_Limit(string code, string name, decimal ratio)
     {
         var currency = Currency.Create(code, name, ratio);
         var walletCreation = () => Wallet.Create(0.0m, currency);
         walletCreation.Should().ThrowExactly<InsufficientInitialBalanceException>();
+    }
+
+
+    [Theory]
+    [InlineData(null!, null!, 1.0)]
+    [InlineData("", "", 1.0)]
+    public void Should_Throw_Exception_If_Currency_Code_Is_Null_Or_Empty(string code, string name, decimal ratio)
+    {
+        var currencyCreation = () => Currency.Create(code, name, ratio);
+        currencyCreation.Should().ThrowExactly<ArgumentNullException>();
+    }
+
+    [Fact]
+    public void Should_Have_Valid_Code_After_Creation()
+    {
+        var currency = Currency.Create("USD", "United States Dollar", 1.0m);
+        currency.Code.Should().NotBeNullOrEmpty();
     }
 }
