@@ -2,11 +2,6 @@ namespace Wallet_Tests;
 
 public class Wallet_Domain_Tests
 {
-    //decimal.FromOACurrency()
-    // TODO -- testing steps
-    //Arrange & Act 
-    //Assert
-
     [Fact]
     public void Should_Throw_Exception_If_Balance_Is_Negative()
     {
