@@ -21,6 +21,11 @@ public class Currency
             throw new ArgumentNullException();
         }
 
+        if (decimal.IsNegative(ratio))
+        {
+            throw new ArgumentOutOfRangeException();
+        }
+
         return new Currency
         {
             Id = Guid.NewGuid(),
