@@ -14,12 +14,20 @@ public class Currency
     public DateTime ModifiedOnUtc { get; private set; }
     public DateTime CreatedOnUtc { get; private set; }
 
-    public static Currency Create(string code, string name, decimal ratio) => new()
+    public static Currency Create(string code, string name, decimal ratio)
     {
-        Id = Guid.NewGuid(),
-        Code = code,
-        Name = name,
-        Ratio = ratio,
-        CreatedOnUtc = DateTime.UtcNow
-    };
+        if (string.IsNullOrEmpty(code) || string.IsNullOrEmpty(name))
+        {
+            throw new ArgumentNullException();
+        }
+
+        return new Currency
+        {
+            Id = Guid.NewGuid(),
+            Code = code,
+            Name = name,
+            Ratio = ratio,
+            CreatedOnUtc = DateTime.UtcNow
+        };
+    }
 }
