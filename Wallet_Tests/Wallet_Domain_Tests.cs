@@ -43,4 +43,27 @@ public class Wallet_Domain_Tests
         var walletCreation = () => Wallet.Create(0.0m, currency);
         walletCreation.Should().ThrowExactly<InsufficientInitialBalanceException>();
     }
+
+    [Theory]
+    [InlineData(-10)]
+    [InlineData(-200.9)]
+    [InlineData(0)]
+    public void Should_Throw_Exception_When_Deposit_Amount_Is_Negative_Or_Zero(decimal amount)
+    {
+        var currency = Currency.Create("USD", "United States Dollar", 1.99m);
+        var wallet = Wallet.Create(balance: 100, currency);
+        var walletCreation = () => wallet.Deposit(amount);
+        walletCreation.Should().ThrowExactly<NegativeBalanceException>();
+    }
+
+
+    [Fact]
+    public void Should_Increase_Balance_When_Deposit_Amount_Is_Positive()
+    {
+        var currency = Currency.Create("USD", "United States Dollar", 1.99m);
+        var wallet = Wallet.Create(balance: 100, currency);
+
+        wallet.Deposit(amount: 100);
+        wallet.Balance.Should().Be(200);
+    }
 }
