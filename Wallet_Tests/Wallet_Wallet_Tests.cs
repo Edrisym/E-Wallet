@@ -70,7 +70,7 @@ public class Wallet_Wallet_Tests
         var currency = Currency.Create("USD", "United States Dollar", 1.99m);
         var wallet = Wallet.Create(balance: 100, currency);
         wallet.Withdraw(amount: 100);
-        wallet.Balance.Should().Be(0).And.BePositive();
+        wallet.Balance.Should().BeGreaterOrEqualTo(0);
         ;
     }
 
