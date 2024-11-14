@@ -83,4 +83,16 @@ public class Wallet_Wallet_Tests
         var withdrawal = () => wallet.Withdraw(amount: 101);
         withdrawal.Should().ThrowExactly<InsufficientFundsException>();
     }
+    
+    [Theory]
+    [InlineData(-10)]
+    [InlineData(0)]
+    [InlineData(-113)]
+    public void Should_Decrease_Balance_When_Withdrawal_Zero_Or_Negative_Amount(decimal amount)
+    {
+        var currency = Currency.Create("USD", "United States Dollar", 1.99m);
+        var wallet = Wallet.Create(balance: 100, currency);
+        var withdrawal = () => wallet.Withdraw(amount);
+        withdrawal.Should().ThrowExactly<InvalidDataException>();
+    }
 }

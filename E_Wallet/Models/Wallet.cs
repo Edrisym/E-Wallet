@@ -45,8 +45,14 @@ public class Wallet
 
     public void Withdraw(decimal amount)
     {
+        if (decimal.IsNegative(amount) || decimal.Equals(amount, decimal.Zero))
+        {
+            throw new InvalidDataException();
+        }
+
         if (Balance < amount)
             InsufficientFundsException.Throw(amount);
+
         Balance -= amount;
     }
 
