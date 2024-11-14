@@ -1,4 +1,3 @@
-
 namespace E_Wallet.Models;
 
 public class Wallet
@@ -40,20 +39,14 @@ public class Wallet
     {
         // TODO -- ***is it ok to check on zero values**
         if (decimal.IsNegative(amount) || amount == decimal.Zero)
-        {
             NegativeBalanceException.Throw(amount);
-        }
-
         Balance += amount;
     }
 
     public void Withdraw(decimal amount)
     {
         if (Balance < amount)
-        {
             InsufficientFundsException.Throw(amount);
-        }
-
         Balance -= amount;
     }
 
