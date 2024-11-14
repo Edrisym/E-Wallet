@@ -44,5 +44,11 @@ Here’s a list of tests to consider when starting with TDD for an e-wallet/acco
     - Test that deposits or withdrawals exceeding daily or monthly limits are not allowed.
     - Test that transactions within the limit are processed successfully.
 
+11. **Wallet Status Change (Active, Suspended, etc.)**
+- Test the scenario where the wallet is already in the desired status (e.g., trying to suspend an already suspended wallet).
+- Ensure that invalid status changes (e.g., from Suspended to Active without following the proper steps) are handled properly with an exception (e.g., `InvalidStatusChangeException`).
+- Test that no action is taken if the wallet is already in the target status (e.g., if a wallet is already deactivated, it shouldn't change status without a valid trigger).
+- Test that status change properly triggers any related logic, such as restrictions on withdrawals or deposits when the wallet is suspended.
+
 These tests will give a strong foundation for building and validating the core functionality of an e-wallet/account
 domain.
