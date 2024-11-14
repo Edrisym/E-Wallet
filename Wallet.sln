@@ -6,6 +6,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{272CA49E-029
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wallet.Domain", "Wallet.Domain\Wallet.Domain.csproj", "{545CC8FD-79D9-4208-BCBB-C380D1FCFC25}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{9B06A700-D91F-43C8-977D-CCA3FBFE244A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,5 +25,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{545CC8FD-79D9-4208-BCBB-C380D1FCFC25} = {272CA49E-0294-4E32-A94C-635F32D0B74A}
+		{628581B3-CBF4-47B5-A7BE-D81634999389} = {9B06A700-D91F-43C8-977D-CCA3FBFE244A}
 	EndGlobalSection
 EndGlobal
