@@ -10,9 +10,9 @@ Here’s a list of tests to consider when starting with TDD for an e-wallet/acco
     - [x] Test that depositing a zero or negative amount results in an error or is not allowed.
 
 3. **Withdraw Funds**
-    - Test that withdrawing a valid amount decreases the wallet balance correctly.
-    - Test that attempting to withdraw more than the available balance results in an error or is not allowed.
-    - Test that withdrawing a zero or negative amount results in an error or is not allowed.
+    - [x] Test that withdrawing a valid amount decreases the wallet balance correctly.
+    - [x] Test that attempting to withdraw more than the available balance results in an error or is not allowed.
+    - [x] Test that withdrawing a zero or negative amount results in an error or is not allowed.
 
 4. **Transfer Funds Between Wallets**
     - Test that a valid transfer from one wallet to another decreases the sender’s balance and increases the receiver’s
