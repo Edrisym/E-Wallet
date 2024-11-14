@@ -1,6 +1,6 @@
 namespace Wallet_Tests;
 
-public class Wallet_Domain_Tests
+public class Wallet_Wallet_Tests
 {
     [Fact]
     public void Should_Throw_Exception_If_Balance_Is_Negative()

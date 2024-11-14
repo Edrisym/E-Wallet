@@ -21,4 +21,8 @@
         <Using Include="Xunit" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\E_Wallet\E_Wallet.csproj" />
+    </ItemGroup>
+
 </Project>
