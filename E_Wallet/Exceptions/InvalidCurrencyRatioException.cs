@@ -1,4 +1,4 @@
-namespace Wallet_Tests.Exceptions;
+namespace E_Wallet.Exceptions;
 
 public class InvalidCurrencyRatioException(decimal ratio) : Exception(string.Format(Message, ratio))
 {

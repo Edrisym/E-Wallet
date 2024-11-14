@@ -1,4 +1,4 @@
-namespace Wallet_Tests.Exceptions;
+namespace E_Wallet.Exceptions;
 
 public class NegativeBalanceException : Exception
 {

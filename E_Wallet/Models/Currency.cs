@@ -1,4 +1,4 @@
-namespace Wallet_Tests;
+namespace E_Wallet.Models;
 
 public class Currency
 {

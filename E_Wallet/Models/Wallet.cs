@@ -1,7 +1,5 @@
-using Wallet_Tests.Exceptions;
-using Xunit.Sdk;
 
-namespace Wallet_Tests;
+namespace E_Wallet.Models;
 
 public class Wallet
 {
@@ -40,6 +38,7 @@ public class Wallet
 
     public void Deposit(decimal amount)
     {
+        // TODO -- ***is it ok to check on zero values**
         if (decimal.IsNegative(amount) || amount == decimal.Zero)
         {
             NegativeBalanceException.Throw(amount);

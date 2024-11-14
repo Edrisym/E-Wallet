@@ -1,4 +1,4 @@
-namespace Wallet_Tests;
+namespace E_Wallet.Exceptions;
 
 public class InsufficientInitialBalanceException(decimal balance) :
     Exception(string.Format(Message, balance))
