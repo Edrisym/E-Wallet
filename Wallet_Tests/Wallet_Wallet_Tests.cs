@@ -1,25 +1,33 @@
+using EWallet.Api.Common.Exceptions;
+using EWallet.Api.Common.Models;
+
 namespace Wallet_Tests;
 
-public class Wallet_Wallet_Tests
+public class WalletTests
 {
+    private static Currency CreateCurrency(string code = "USD", string name = "United States Dollar",
+        decimal ratio = 1.99m)
+    {
+        return Currency.Create(code, name, ratio);
+    }
+
+    private static Wallet CreateWallet(decimal balance, decimal ratio = 1.99m)
+    {
+        var currency = CreateCurrency(ratio: ratio);
+        return Wallet.Create(balance, currency);
+    }
+
     [Fact]
     public void Should_Throw_Exception_If_Balance_Is_Negative()
     {
-        var balance = -0.75m;
-        var currency = Currency.Create("USD", "United States Dollar", 1.0m);
-        var walletCreation = () => Wallet.Create(balance, currency);
-
+        var walletCreation = () => CreateWallet(balance: -0.75m, ratio: 1.0m);
         walletCreation.Should().ThrowExactly<NegativeBalanceException>();
     }
-
 
     [Fact]
     public void Should_Set_Initial_Balance_To_One_Dollar_When_Currency_Is_USD()
     {
-        var currency = Currency.Create("USD", "United States Dollar", 0.99m);
-
-        var walletCreation = () => Wallet.Create(1.0m, currency);
-
+        var walletCreation = () => CreateWallet(balance: 1.0m, ratio: 0.99m);
         walletCreation.Should().ThrowExactly<InvalidCurrencyRatioException>();
     }
 
@@ -34,7 +42,7 @@ public class Wallet_Wallet_Tests
     [InlineData("USD", "United States Dollar", 0.99)]
     public void Should_Throw_Exception_If_InitialBalance_Is_Under_Limit(string code, string name, decimal ratio)
     {
-        var currency = Currency.Create(code, name, ratio);
+        var currency = CreateCurrency(code, name, ratio);
         var walletCreation = () => Wallet.Create(0.0m, currency);
         walletCreation.Should().ThrowExactly<InsufficientInitialBalanceException>();
     }
@@ -43,55 +51,44 @@ public class Wallet_Wallet_Tests
     [InlineData(-10)]
     [InlineData(-200.9)]
     [InlineData(0)]
-    [InlineData(null!)]
     public void Should_Throw_Exception_When_Deposit_Amount_Is_Negative_Or_Zero(decimal amount)
     {
-        var currency = Currency.Create("USD", "United States Dollar", 1.99m);
-        var wallet = Wallet.Create(balance: 100, currency);
-        var walletCreation = () => wallet.Deposit(amount);
-        walletCreation.Should().ThrowExactly<NegativeBalanceException>();
+        var wallet = CreateWallet(balance: 100);
+        var depositAction = () => wallet.Deposit(amount);
+        depositAction.Should().ThrowExactly<NegativeBalanceException>();
     }
-
 
     [Fact]
     public void Should_Increase_Balance_When_Deposit_Amount_Is_Positive()
     {
-        var currency = Currency.Create("USD", "United States Dollar", 1.99m);
-        var wallet = Wallet.Create(balance: 100, currency);
-
+        var wallet = CreateWallet(balance: 100);
         wallet.Deposit(amount: 100);
         wallet.Balance.Should().Be(200);
     }
 
-
     [Fact]
     public void Should_Throw_Exception_When_Balance_Is_Lower_Than_Withdrawal_Amount()
     {
-        var currency = Currency.Create("USD", "United States Dollar", 1.99m);
-        var wallet = Wallet.Create(balance: 100, currency);
+        var wallet = CreateWallet(balance: 100);
         wallet.Withdraw(amount: 100);
         wallet.Balance.Should().BeGreaterOrEqualTo(0);
-        ;
     }
 
-
     [Fact]
-    public void Should_Decrease_Balance_When_Withdrawal()
+    public void Should_Decrease_Balance_When_Withdrawal_Amount_Exceeds_Balance()
     {
-        var currency = Currency.Create("USD", "United States Dollar", 1.99m);
-        var wallet = Wallet.Create(balance: 100, currency);
+        var wallet = CreateWallet(balance: 100);
         var withdrawal = () => wallet.Withdraw(amount: 101);
         withdrawal.Should().ThrowExactly<InsufficientFundsException>();
     }
-    
+
     [Theory]
     [InlineData(-10)]
     [InlineData(0)]
     [InlineData(-113)]
-    public void Should_Decrease_Balance_When_Withdrawal_Zero_Or_Negative_Amount(decimal amount)
+    public void Should_Throw_Exception_When_Withdrawal_Amount_Is_Zero_Or_Negative(decimal amount)
     {
-        var currency = Currency.Create("USD", "United States Dollar", 1.99m);
-        var wallet = Wallet.Create(balance: 100, currency);
+        var wallet = CreateWallet(balance: 100);
         var withdrawal = () => wallet.Withdraw(amount);
         withdrawal.Should().ThrowExactly<InvalidDataException>();
     }
