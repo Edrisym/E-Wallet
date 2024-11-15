@@ -6,10 +6,7 @@ namespace Wallet_Tests;
 public class WalletTests
 {
     private static Currency CreateCurrency(string code = "USD", string name = "United States Dollar",
-        decimal ratio = 1.99m)
-    {
-        return Currency.Create(code, name, ratio);
-    }
+        decimal ratio = 1.99m) => Currency.Create(code, name, ratio);
 
     private static Wallet CreateWallet(decimal balance, decimal ratio = 1.99m)
     {
