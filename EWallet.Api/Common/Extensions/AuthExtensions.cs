@@ -1,5 +1,3 @@
-using EWallet.Api.Common;
-
 public static class AuthExtensions
 {
     public static IServiceCollection AddCustomAuthentication(this IServiceCollection services,
