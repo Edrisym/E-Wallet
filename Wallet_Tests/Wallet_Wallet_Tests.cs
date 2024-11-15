@@ -92,4 +92,10 @@ public class WalletTests
         var withdrawal = () => wallet.Withdraw(amount);
         withdrawal.Should().ThrowExactly<InvalidDataException>();
     }
+
+    [Fact]
+    public void Should_Change_Status_When_Changing_Wallet_Status()
+    {
+        var wallet = CreateWallet(balance: 100);
+    }
 }
