@@ -1,4 +1,6 @@
-namespace EWallet.Api.Models;
+using EWallet.Api.Common.Exceptions;
+
+namespace EWallet.Api.Common.Models;
 
 public class Wallet
 {

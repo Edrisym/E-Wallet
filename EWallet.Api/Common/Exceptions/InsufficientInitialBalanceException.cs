@@ -1,4 +1,4 @@
-namespace EWallet.Api.Exceptions;
+namespace EWallet.Api.Common.Exceptions;
 
 public class InsufficientInitialBalanceException(decimal balance) :
     Exception(string.Format(Message, balance))

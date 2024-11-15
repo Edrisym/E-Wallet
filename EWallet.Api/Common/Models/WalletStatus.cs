@@ -1,4 +1,4 @@
-namespace EWallet.Api.Models;
+namespace EWallet.Api.Common.Models;
 
 public enum WalletStatus
 {

@@ -1,4 +1,4 @@
-namespace EWallet.Api;
+namespace EWallet.Api.Common;
 
 public class IdentityStaticData
 {

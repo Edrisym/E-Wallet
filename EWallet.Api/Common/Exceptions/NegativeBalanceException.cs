@@ -1,4 +1,4 @@
-namespace EWallet.Api.Exceptions;
+namespace EWallet.Api.Common.Exceptions;
 
 public class NegativeBalanceException : Exception
 {
