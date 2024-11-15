@@ -22,7 +22,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\E_Wallet\E_Wallet.csproj" />
+      <ProjectReference Include="..\EWallet.Api\EWallet.Api.csproj" />
     </ItemGroup>
 
 </Project>
