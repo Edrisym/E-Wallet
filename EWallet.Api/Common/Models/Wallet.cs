@@ -19,13 +19,9 @@ public class Wallet
     public static Wallet Create(decimal balance, Currency currency)
     {
         if (decimal.IsNegative(balance))
-        {
             NegativeBalanceException.Throw(balance);
-        }
         else if (InitialBalance > balance)
-        {
             InsufficientInitialBalanceException.Throw(balance);
-        }
 
         ArgumentNullException.ThrowIfNull(currency);
         if (!IsValidRatio(currency)) InvalidCurrencyRatioException.Throw(currency.Ratio);
