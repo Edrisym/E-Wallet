@@ -1,4 +1,4 @@
-namespace E_Wallet.Exceptions;
+namespace EWallet.Api.Exceptions;
 
 public class InvalidCurrencyRatioException(decimal ratio) : Exception(string.Format(Message, ratio))
 {

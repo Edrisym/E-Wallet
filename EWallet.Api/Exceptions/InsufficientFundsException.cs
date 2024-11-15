@@ -1,4 +1,4 @@
-namespace E_Wallet.Exceptions;
+namespace EWallet.Api.Exceptions;
 
 public class InsufficientFundsException(decimal amount) : Exception(string.Format(Message, amount))
 {
