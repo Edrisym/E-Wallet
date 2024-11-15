@@ -6,7 +6,7 @@ public class Currency
     {
     }
 
-    public Guid Id { get; private set; }
+    public CurrencyId Id { get; private set; }
     public string Name { get; private set; }
     public string Code { get; private set; }
     public decimal Ratio { get; private set; }
@@ -28,7 +28,7 @@ public class Currency
 
         return new Currency
         {
-            Id = Guid.NewGuid(),
+            Id = CurrencyId.NewId(),
             Code = code,
             Name = name,
             Ratio = ratio,

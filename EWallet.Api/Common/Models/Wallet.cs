@@ -12,6 +12,7 @@ public class Wallet
     public Guid Id { get; private set; }
     public decimal Balance { get; private set; }
 
+    public CurrencyId CurrencyId { get; set; }
     public Currency Currency { get; private set; }
 
     public static Wallet Create(decimal balance, Currency currency)
