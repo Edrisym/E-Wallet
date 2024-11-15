@@ -11,6 +11,7 @@ public class Wallet
     private const decimal InitialBalance = 1.0m;
     public Guid Id { get; private set; }
     public decimal Balance { get; private set; }
+    public string Status { get; private set; }
 
     public CurrencyId CurrencyId { get; set; }
     public Currency Currency { get; private set; }
