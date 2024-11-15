@@ -27,13 +27,15 @@ public class Wallet
             InsufficientInitialBalanceException.Throw(balance);
 
         ArgumentNullException.ThrowIfNull(currency);
-        if (!IsValidRatio(currency)) InvalidCurrencyRatioException.Throw(currency.Ratio);
+        if (!IsValidRatio(currency))
+            InvalidCurrencyRatioException.Throw(currency.Ratio);
 
         return new Wallet
         {
             Id = Guid.NewGuid(),
             Balance = balance,
             Currency = currency,
+            CurrencyId = currency.Id,
             Status = WalletStatus.UnderReview.ToString(),
             CreatedOnUtc = DateTime.UtcNow,
         };
