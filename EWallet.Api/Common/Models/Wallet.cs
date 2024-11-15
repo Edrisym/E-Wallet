@@ -15,6 +15,9 @@ public class Wallet
 
     public CurrencyId CurrencyId { get; set; }
     public Currency Currency { get; private set; }
+    public DateTime ModifiedOnUtc { get; private set; }
+    public DateTime CreatedOnUtc { get; private set; }
+
 
     public static Wallet Create(decimal balance, Currency currency)
     {
@@ -32,6 +35,7 @@ public class Wallet
             Balance = balance,
             Currency = currency,
             Status = WalletStatus.UnderReview.ToString(),
+            CreatedOnUtc = DateTime.UtcNow,
         };
     }
 
