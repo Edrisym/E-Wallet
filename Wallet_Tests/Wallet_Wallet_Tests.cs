@@ -91,8 +91,33 @@ public class WalletTests
     }
 
     [Fact]
+    public void Should_Set_Status_To_UnderReview_When_Creating_New_Wallet()
+    {
+        var wallet = CreateWallet(balance: 100);
+        wallet.Status.Should().Be(WalletStatus.UnderReview.ToString());
+    }
+
+    [Fact]
     public void Should_Change_Status_When_Changing_Wallet_Status()
     {
         var wallet = CreateWallet(balance: 100);
+        wallet.Status.Should().Be(WalletStatus.UnderReview.ToString());
+    }
+
+    [Fact]
+    public void Should_Change_Status_When_Valid_Transition()
+    {
+        var wallet = CreateWallet(balance: 100);
+        wallet.Status.Should().Be(WalletStatus.UnderReview.ToString());
+        wallet.ChangeStatus(WalletStatus.PendingActivation);
+        wallet.Status.Should().Be(WalletStatus.PendingActivation.ToString());
+    }
+
+    [Fact]
+    public void Should_Throw_Exception_When_Invalid_Transition()
+    {
+        var wallet = CreateWallet(balance: 100);
+        var changeStatusOpt = () => wallet.ChangeStatus(WalletStatus.Active);
+        changeStatusOpt.Should().ThrowExactly<InvalidOperationException>();
     }
 }
