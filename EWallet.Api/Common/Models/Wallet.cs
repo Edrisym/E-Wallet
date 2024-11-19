@@ -12,6 +12,7 @@ public class Wallet
     public Guid Id { get; private set; }
     public decimal Balance { get; private set; }
     public string Status { get; private set; }
+    public int StatusId { get; private set; }
 
     public CurrencyId CurrencyId { get; set; }
     public Currency Currency { get; private set; }
@@ -37,6 +38,7 @@ public class Wallet
             Currency = currency,
             CurrencyId = currency.Id,
             Status = WalletStatus.UnderReview.ToString(),
+            StatusId = (int)WalletStatus.UnderReview,
             CreatedOnUtc = DateTime.UtcNow,
         };
     }
