@@ -79,45 +79,22 @@ public class Wallet
     }
 
 
-    // TODO -- come up with a better solution
-    private static readonly Dictionary<WalletStatus, List<WalletStatus>> StatusTransitions = new()
-    {
-        { WalletStatus.UnderReview, new List<WalletStatus> { WalletStatus.PendingActivation } },
-        { WalletStatus.PendingActivation, new List<WalletStatus> { WalletStatus.Verified } },
-        { WalletStatus.Verified, new List<WalletStatus> { WalletStatus.Active } },
-        { WalletStatus.Active, new List<WalletStatus> { WalletStatus.Suspended, WalletStatus.Locked } },
-        { WalletStatus.Suspended, new List<WalletStatus> { WalletStatus.Closed, WalletStatus.Deactivated } },
-        { WalletStatus.Closed, new List<WalletStatus> { WalletStatus.Deactivated } },
-        { WalletStatus.Deactivated, new List<WalletStatus> { WalletStatus.Expired } },
-        { WalletStatus.Expired, new List<WalletStatus> { WalletStatus.Closed } },
-        { WalletStatus.PendingClosure, new List<WalletStatus> { WalletStatus.Closed } },
-        { WalletStatus.Inactive, new List<WalletStatus> { WalletStatus.PendingActivation, WalletStatus.Suspended } },
-        { WalletStatus.Frozen, new List<WalletStatus> { WalletStatus.Locked, WalletStatus.Suspended } }
-    };
-
-
-    // TODO no good
-    public void ChangeStatus(WalletStatus newStatus)
+    private Wallet SwitchStatus(WalletStatus newStatus, Action<Wallet>? operation = null)
     {
         var currentStatus = Enum.Parse<WalletStatus>(Status);
 
+        if (!StatusTransitions.TryGetValue(currentStatus, out var allowedTransitions) ||
+            !allowedTransitions.Contains(newStatus))
+        {
+            throw new InvalidOperationException($"Cannot transition from {currentStatus} to {newStatus}.");
+        }
 
-        if (StatusTransitions.TryGetValue(currentStatus, out var transition))
-        {
-            if (transition.Contains(newStatus))
-            {
-                Status = newStatus.ToString();
-            }
-            else
-            {
-                throw new InvalidOperationException(
-                    $"Cannot change status from {currentStatus} to {newStatus.ToString()}. Invalid transition.");
-            }
-        }
-        else
-        {
-            throw new InvalidOperationException(
-                $"No valid transitions available from the current status: {currentStatus.ToString()}.");
-        }
+        Status = newStatus.ToString();
+        StatusId = (int)newStatus;
+        ModifiedOnUtc = DateTime.UtcNow;
+
+        operation?.Invoke(this);
+
+        return this;
     }
 }
