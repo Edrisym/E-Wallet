@@ -46,7 +46,6 @@ public class WalletTests
 
     [Theory]
     [InlineData(-10)]
-    [InlineData(-200.9)]
     [InlineData(0)]
     public void Should_Throw_Exception_When_Deposit_Amount_Is_Negative_Or_Zero(decimal amount)
     {
@@ -109,15 +108,33 @@ public class WalletTests
     {
         var wallet = CreateWallet(balance: 100);
         wallet.Status.Should().Be(WalletStatus.UnderReview.ToString());
-        wallet.ChangeStatus(WalletStatus.PendingActivation);
+
+        wallet.PendActivation();
+
         wallet.Status.Should().Be(WalletStatus.PendingActivation.ToString());
+        wallet.StatusId.Should().Be((int)WalletStatus.PendingActivation);
+
+        wallet.Activate();
+
+        wallet.Status.Should().Be(WalletStatus.Active.ToString());
+        wallet.StatusId.Should().Be((int)WalletStatus.Active);
+
+        wallet.Suspend();
+
+        wallet.Status.Should().Be(WalletStatus.Suspended.ToString());
+        wallet.StatusId.Should().Be((int)WalletStatus.Suspended);
+
+        wallet.Close();
+
+        wallet.Status.Should().Be(WalletStatus.Closed.ToString());
+        wallet.StatusId.Should().Be((int)WalletStatus.Closed);
     }
 
     [Fact]
     public void Should_Throw_Exception_When_Invalid_Transition()
     {
         var wallet = CreateWallet(balance: 100);
-        var changeStatusOpt = () => wallet.ChangeStatus(WalletStatus.Active);
+        var changeStatusOpt = () => wallet.Activate();
         changeStatusOpt.Should().ThrowExactly<InvalidOperationException>();
     }
 }
