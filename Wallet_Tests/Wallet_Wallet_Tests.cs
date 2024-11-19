@@ -1,5 +1,3 @@
-using EWallet.Api.Common.Exceptions;
-using EWallet.Api.Common.Models;
 
 namespace Wallet_Tests;
 
