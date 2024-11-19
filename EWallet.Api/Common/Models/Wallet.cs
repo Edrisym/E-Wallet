@@ -97,4 +97,24 @@ public class Wallet
 
         return this;
     }
+
+    public Wallet Activate()
+    {
+        return SwitchStatus(WalletStatus.Active);
+    }
+
+    public Wallet PendActivation()
+    {
+        return SwitchStatus(WalletStatus.PendingActivation);
+    }
+
+    public Wallet Suspend()
+    {
+        return SwitchStatus(WalletStatus.Suspended);
+    }
+
+    public Wallet Close()
+    {
+        return SwitchStatus(WalletStatus.Closed);
+    }
 }
