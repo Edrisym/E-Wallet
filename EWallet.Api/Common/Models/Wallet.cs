@@ -19,6 +19,14 @@ public class Wallet
     public DateTime ModifiedOnUtc { get; private set; }
     public DateTime CreatedOnUtc { get; private set; }
 
+    private static readonly Dictionary<WalletStatus, List<WalletStatus>> StatusTransitions = new()
+    {
+        { WalletStatus.UnderReview, new List<WalletStatus> { WalletStatus.PendingActivation, WalletStatus.Closed } },
+        { WalletStatus.PendingActivation, new List<WalletStatus> { WalletStatus.Active, WalletStatus.Closed } },
+        { WalletStatus.Active, new List<WalletStatus> { WalletStatus.Suspended, WalletStatus.Closed } },
+        { WalletStatus.Suspended, new List<WalletStatus> { WalletStatus.Active, WalletStatus.Closed } },
+        { WalletStatus.Closed, new List<WalletStatus>() }
+    };
 
     public static Wallet Create(decimal balance, Currency currency)
     {
