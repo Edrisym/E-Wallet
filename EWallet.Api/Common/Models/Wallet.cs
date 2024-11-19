@@ -1,12 +1,10 @@
-using EWallet.Api.Common.Exceptions;
+
 
 namespace EWallet.Api.Common.Models;
 
 public class Wallet
 {
-    private Wallet()
-    {
-    }
+    private Wallet() { }
 
     private const decimal InitialBalance = 1.0m;
     public Guid Id { get; private set; }
