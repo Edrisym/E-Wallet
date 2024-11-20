@@ -10,6 +10,13 @@ public class WalletDbContext(DbContextOptions<WalletDbContext> options) : DbCont
         {
             builder.HasKey(x => x.Id);
 
+            builder.Property(x => x.Id)
+                .ValueGeneratedNever()
+                .HasConversion(id => id.Value,
+                    value => CurrencyId.From(value))
+                .HasColumnType("NVARCHAR(36)");
+
+
             builder.Property(x => x.CreatedOnUtc)
                 .IsRequired();
 
@@ -52,6 +59,12 @@ public class WalletDbContext(DbContextOptions<WalletDbContext> options) : DbCont
                 .WithMany()
                 .HasForeignKey(w => w.CurrencyId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            entity.Property(x => x.CurrencyId)
+                .ValueGeneratedNever()
+                .HasConversion(id => id.Value,
+                    value => CurrencyId.From(value))
+                .HasColumnType("NVARCHAR(36)");
 
             entity.HasIndex(w => w.StatusId)
                 .HasDatabaseName("IX_Wallets_StatusId")
