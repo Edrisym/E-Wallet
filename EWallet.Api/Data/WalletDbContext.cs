@@ -25,7 +25,8 @@ public class WalletDbContext(DbContextOptions<WalletDbContext> options) : DbCont
             builder.Property(x => x.CreatedOnUtc)
                 .IsRequired();
 
-            builder.Property(x => x.ModifiedOnUtc);
+            builder.Property(x => x.ModifiedOnUtc)
+                .IsRequired(false);
 
             builder.Property(x => x.Code)
                 .HasMaxLength(10) //BASEDGODS,HOTDOGE
@@ -57,7 +58,8 @@ public class WalletDbContext(DbContextOptions<WalletDbContext> options) : DbCont
             entity.Property(w => w.CreatedOnUtc)
                 .IsRequired();
 
-            entity.Property(w => w.ModifiedOnUtc);
+            entity.Property(w => w.ModifiedOnUtc)
+                .IsRequired(false);
 
             entity.HasOne(w => w.Currency)
                 .WithMany()
