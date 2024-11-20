@@ -91,40 +91,40 @@ public class WalletTests
     public void Should_Set_Status_To_UnderReview_When_Creating_New_Wallet()
     {
         var wallet = CreateWallet(balance: 100);
-        wallet.Status.Should().Be(WalletStatus.UnderReview.ToString());
+        wallet.Status.Should().Be(WalletStatus.UnderReview);
     }
 
     [Fact]
     public void Should_Change_Status_When_Changing_Wallet_Status()
     {
         var wallet = CreateWallet(balance: 100);
-        wallet.Status.Should().Be(WalletStatus.UnderReview.ToString());
+        wallet.Status.Should().Be(WalletStatus.UnderReview);
     }
 
     [Fact]
     public void Should_Change_Status_When_Valid_Transition()
     {
         var wallet = CreateWallet(balance: 100);
-        wallet.Status.Should().Be(WalletStatus.UnderReview.ToString());
+        wallet.Status.Should().Be(WalletStatus.UnderReview);
 
         wallet.PendActivation();
 
-        wallet.Status.Should().Be(WalletStatus.PendingActivation.ToString());
+        wallet.Status.Should().Be(WalletStatus.PendingActivation);
         wallet.StatusId.Should().Be((int)WalletStatus.PendingActivation);
 
         wallet.Activate();
 
-        wallet.Status.Should().Be(WalletStatus.Active.ToString());
+        wallet.Status.Should().Be(WalletStatus.Active);
         wallet.StatusId.Should().Be((int)WalletStatus.Active);
 
         wallet.Suspend();
 
-        wallet.Status.Should().Be(WalletStatus.Suspended.ToString());
+        wallet.Status.Should().Be(WalletStatus.Suspended);
         wallet.StatusId.Should().Be((int)WalletStatus.Suspended);
 
         wallet.Close();
 
-        wallet.Status.Should().Be(WalletStatus.Closed.ToString());
+        wallet.Status.Should().Be(WalletStatus.Closed);
         wallet.StatusId.Should().Be((int)WalletStatus.Closed);
     }
 
