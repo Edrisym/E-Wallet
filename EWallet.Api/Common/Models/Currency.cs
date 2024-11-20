@@ -16,15 +16,8 @@ public class Currency
 
     public static Currency Create(string code, string name, decimal ratio)
     {
-        if (string.IsNullOrEmpty(code) || string.IsNullOrEmpty(name))
-        {
-            throw new ArgumentNullException();
-        }
-
-        if (decimal.IsNegative(ratio))
-        {
-            throw new ArgumentOutOfRangeException();
-        }
+        if (string.IsNullOrEmpty(code) || string.IsNullOrEmpty(name)) throw new ArgumentNullException();
+        if (!IsValidRatio(ratio)) InvalidCurrencyRatioException.Throw(ratio);
 
         return new Currency
         {
@@ -34,5 +27,11 @@ public class Currency
             Ratio = ratio,
             CreatedOnUtc = DateTime.UtcNow
         };
+    }
+
+
+    private static bool IsValidRatio(decimal ratio)
+    {
+        return decimal.IsPositive(ratio) && ratio >= 1.0m;
     }
 }
