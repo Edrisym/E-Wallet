@@ -33,7 +33,7 @@ public class Wallet
 
     public static Wallet Create(
         decimal balance,
-        Currency currency,
+        CurrencyId currencyId,
         WalletStatus initialStatus = WalletStatus.UnderReview)
     {
         if (decimal.IsNegative(balance))
@@ -41,16 +41,13 @@ public class Wallet
         else if (InitialBalance > balance)
             InsufficientInitialBalanceException.Throw(balance);
 
-        ArgumentNullException.ThrowIfNull(currency);
-        if (!IsValidRatio(currency))
-            InvalidCurrencyRatioException.Throw(currency.Ratio);
+        ArgumentNullException.ThrowIfNull(currencyId);
 
         return new Wallet
         {
             Id = Guid.NewGuid(),
             Balance = balance,
-            Currency = currency,
-            CurrencyId = currency.Id,
+            CurrencyId = currencyId,
             StatusId = (int)initialStatus,
             CreatedOnUtc = DateTime.UtcNow,
         };
@@ -76,11 +73,6 @@ public class Wallet
             InsufficientFundsException.Throw(amount);
 
         Balance -= amount;
-    }
-
-    private static bool IsValidRatio(Currency currency)
-    {
-        return decimal.IsPositive(currency.Ratio) && currency.Ratio > 1.0m;
     }
 
 
