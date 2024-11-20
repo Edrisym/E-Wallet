@@ -1,3 +1,5 @@
+using System.Security.Cryptography.X509Certificates;
+
 namespace EWallet.Api.Common.Dto;
 
-public abstract record WalletDto(decimal Balance, CurrencyId CurrencyId);
+public record WalletDto(decimal Balance, Guid CurrencyId);
