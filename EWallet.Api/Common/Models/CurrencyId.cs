@@ -1,13 +1,8 @@
 namespace EWallet.Api.Common.Models;
 
-public class CurrencyId
+public class CurrencyId(Guid value)
 {
-    private Guid Value { get; set; }
-
-    private CurrencyId(Guid value)
-    {
-        Value = value;
-    }
+    public Guid Value { get; set; } = value;
 
     /// <summary>
     /// Generates a new unique CurrencyId.
