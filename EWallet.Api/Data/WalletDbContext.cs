@@ -8,7 +8,7 @@ public class WalletDbContext(DbContextOptions<WalletDbContext> options) : DbCont
     {
         modelBuilder.Entity<Currency>(builder =>
         {
-            builder.ToTable("Currencies");
+            builder.ToTable(SchemaTable.Currencies);
 
             builder.HasKey(x => x.Id);
 
@@ -16,8 +16,11 @@ public class WalletDbContext(DbContextOptions<WalletDbContext> options) : DbCont
                 .ValueGeneratedNever()
                 .HasConversion(id => id.Value,
                     value => CurrencyId.From(value))
-                .HasColumnType("NVARCHAR(36)");
+                .HasColumnType(DefaultColumnType.Nvarchar36);
 
+            builder.Property(x => x.Ratio)
+                .IsRequired()
+                .HasColumnType(DefaultColumnType.Decimal);
 
             builder.Property(x => x.CreatedOnUtc)
                 .IsRequired();
@@ -30,6 +33,7 @@ public class WalletDbContext(DbContextOptions<WalletDbContext> options) : DbCont
 
             builder.Property(x => x.Name) // BTC,USD,EUR
                 .HasMaxLength(100)
+                .IsRequired()
                 .IsUnicode(false);
 
             builder.HasIndex(c => c.Code)
@@ -39,13 +43,13 @@ public class WalletDbContext(DbContextOptions<WalletDbContext> options) : DbCont
 
         modelBuilder.Entity<Wallet>(entity =>
         {
-            entity.ToTable("Wallets");
+            entity.ToTable(SchemaTable.Wallets);
 
             entity.HasKey(w => w.Id);
 
             entity.Property(w => w.Balance)
                 .IsRequired()
-                .HasColumnType("decimal(18, 2)");
+                .HasColumnType(DefaultColumnType.Decimal);
 
             entity.Property(w => w.StatusId)
                 .IsRequired();
@@ -64,7 +68,7 @@ public class WalletDbContext(DbContextOptions<WalletDbContext> options) : DbCont
                 .ValueGeneratedNever()
                 .HasConversion(id => id.Value,
                     value => CurrencyId.From(value))
-                .HasColumnType("NVARCHAR(36)");
+                .HasColumnType(DefaultColumnType.Nvarchar36);
 
             entity.HasIndex(w => w.StatusId)
                 .HasDatabaseName("IX_Wallets_StatusId")
