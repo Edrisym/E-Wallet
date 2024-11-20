@@ -1,4 +1,3 @@
-
 namespace Wallet_Tests;
 
 public class WalletTests
@@ -9,7 +8,7 @@ public class WalletTests
     private static Wallet CreateWallet(decimal balance, decimal ratio = 1.99m)
     {
         var currency = CreateCurrency(ratio: ratio);
-        return Wallet.Create(balance, currency);
+        return Wallet.Create(balance, currency.Id);
     }
 
     [Fact]
@@ -33,12 +32,11 @@ public class WalletTests
         walletCreation.Should().ThrowExactly<ArgumentNullException>();
     }
 
-    [Theory]
-    [InlineData("USD", "United States Dollar", 0.99)]
-    public void Should_Throw_Exception_If_InitialBalance_Is_Under_Limit(string code, string name, decimal ratio)
+    [Fact]
+    public void Should_Throw_Exception_If_InitialBalance_Is_Under_Limit()
     {
-        var currency = CreateCurrency(code, name, ratio);
-        var walletCreation = () => Wallet.Create(0.0m, currency);
+        var currency = CreateCurrency("USD", "United States Dollar", 1.0m);
+        var walletCreation = () => Wallet.Create(0.0m, currency.Id);
         walletCreation.Should().ThrowExactly<InsufficientInitialBalanceException>();
     }
 

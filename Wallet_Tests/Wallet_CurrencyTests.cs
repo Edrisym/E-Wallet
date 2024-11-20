@@ -13,7 +13,7 @@ public class Wallet_CurrencyTests
     public void Should_Throw_Exception_If_Ratio_Is_Negative(decimal ratio)
     {
         var currencyCreation = () => CreateCurrency(ratio: ratio);
-        currencyCreation.Should().ThrowExactly<ArgumentOutOfRangeException>();
+        currencyCreation.Should().ThrowExactly<InvalidCurrencyRatioException>();
     }
 
     [Fact]
