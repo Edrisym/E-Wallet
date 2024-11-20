@@ -1,13 +1,15 @@
-
 public class WalletDbContext(DbContextOptions<WalletDbContext> options) : DbContext(options)
 {
     public DbSet<Wallet> Wallets { get; set; }
     public DbSet<Currency> Currencies { get; set; }
 
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Currency>(builder =>
         {
+            builder.ToTable("Currencies");
+
             builder.HasKey(x => x.Id);
 
             builder.Property(x => x.Id)
