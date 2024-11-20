@@ -1,21 +1,26 @@
-
-
 namespace EWallet.Api.Common.Models;
 
 public class Wallet
 {
-    private Wallet() { }
+    private Wallet()
+    {
+    }
 
     private const decimal InitialBalance = 1.0m;
     public Guid Id { get; private set; }
     public decimal Balance { get; private set; }
-    public string Status { get; private set; }
     public int StatusId { get; private set; }
 
     public CurrencyId CurrencyId { get; set; }
     public Currency Currency { get; private set; }
     public DateTime ModifiedOnUtc { get; private set; }
     public DateTime CreatedOnUtc { get; private set; }
+
+    public WalletStatus Status
+    {
+        get => (WalletStatus)StatusId;
+        private set => StatusId = (int)value;
+    }
 
     private static readonly Dictionary<WalletStatus, List<WalletStatus>> StatusTransitions = new()
     {
@@ -26,7 +31,10 @@ public class Wallet
         { WalletStatus.Closed, new List<WalletStatus>() }
     };
 
-    public static Wallet Create(decimal balance, Currency currency)
+    public static Wallet Create(
+        decimal balance,
+        Currency currency,
+        WalletStatus initialStatus = WalletStatus.UnderReview)
     {
         if (decimal.IsNegative(balance))
             NegativeBalanceException.Throw(balance);
@@ -43,8 +51,7 @@ public class Wallet
             Balance = balance,
             Currency = currency,
             CurrencyId = currency.Id,
-            Status = WalletStatus.UnderReview.ToString(),
-            StatusId = (int)WalletStatus.UnderReview,
+            StatusId = (int)initialStatus,
             CreatedOnUtc = DateTime.UtcNow,
         };
     }
@@ -79,7 +86,7 @@ public class Wallet
 
     private Wallet SwitchStatus(WalletStatus newStatus, Action<Wallet>? operation = null)
     {
-        var currentStatus = Enum.Parse<WalletStatus>(Status);
+        var currentStatus = Enum.Parse<WalletStatus>(Status.ToString());
 
         if (!StatusTransitions.TryGetValue(currentStatus, out var allowedTransitions) ||
             !allowedTransitions.Contains(newStatus))
@@ -87,7 +94,6 @@ public class Wallet
             throw new InvalidOperationException($"Cannot transition from {currentStatus} to {newStatus}.");
         }
 
-        Status = newStatus.ToString();
         StatusId = (int)newStatus;
         ModifiedOnUtc = DateTime.UtcNow;
 
