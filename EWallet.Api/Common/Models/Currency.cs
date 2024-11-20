@@ -11,7 +11,7 @@ public class Currency
     public string Code { get; private set; }
     public decimal Ratio { get; private set; }
 
-    public DateTime ModifiedOnUtc { get; private set; }
+    public DateTime? ModifiedOnUtc { get; private set; }
     public DateTime CreatedOnUtc { get; private set; }
 
     public static Currency Create(string code, string name, decimal ratio)

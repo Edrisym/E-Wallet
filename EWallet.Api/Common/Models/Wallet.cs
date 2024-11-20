@@ -11,9 +11,9 @@ public class Wallet
     public decimal Balance { get; private set; }
     public int StatusId { get; private set; }
 
-    public CurrencyId CurrencyId { get; set; }
+    public CurrencyId CurrencyId { get; private set; }
     public Currency Currency { get; private set; }
-    public DateTime ModifiedOnUtc { get; private set; }
+    public DateTime? ModifiedOnUtc { get; private set; }
     public DateTime CreatedOnUtc { get; private set; }
 
     public WalletStatus Status
