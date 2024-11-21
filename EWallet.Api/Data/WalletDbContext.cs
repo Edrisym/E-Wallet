@@ -29,10 +29,10 @@ public class WalletDbContext(DbContextOptions<WalletDbContext> options) : DbCont
                 .IsRequired(false);
 
             builder.Property(x => x.Code)
-                .HasMaxLength(10) //BASEDGODS,HOTDOGE
+                .HasMaxLength(10) //  BASEDGODS,HOTDOGE -- BTC,USD,EUR
                 .IsUnicode(false);
 
-            builder.Property(x => x.Name) // BTC,USD,EUR
+            builder.Property(x => x.Name) // Dollar,Euro,Lira
                 .HasMaxLength(100)
                 .IsRequired()
                 .IsUnicode(false);
@@ -40,39 +40,48 @@ public class WalletDbContext(DbContextOptions<WalletDbContext> options) : DbCont
             builder.HasIndex(c => c.Code)
                 .HasDatabaseName("IX_Currencies_Code")
                 .IsClustered(false);
+
+            builder.HasIndex(e => new { e.Code, e.Name })
+                .IsUnique();
         });
 
-        modelBuilder.Entity<Wallet>(entity =>
+        modelBuilder.Entity<Wallet>(builder =>
         {
-            entity.ToTable(SchemaTable.Wallets);
+            builder.ToTable(SchemaTable.Wallets);
 
-            entity.HasKey(w => w.Id);
+            builder.HasKey(w => w.Id);
 
-            entity.Property(w => w.Balance)
+            builder.Property(x => x.Id)
+                .ValueGeneratedNever()
+                .HasConversion(id => id.Value,
+                    value => WalletId.From(value))
+                .HasColumnType(DefaultColumnType.Nvarchar36);
+
+            builder.Property(w => w.Balance)
                 .IsRequired()
                 .HasColumnType(DefaultColumnType.Decimal);
 
-            entity.Property(w => w.StatusId)
+            builder.Property(w => w.StatusId)
                 .IsRequired();
 
-            entity.Property(w => w.CreatedOnUtc)
+            builder.Property(w => w.CreatedOnUtc)
                 .IsRequired();
 
-            entity.Property(w => w.ModifiedOnUtc)
+            builder.Property(w => w.ModifiedOnUtc)
                 .IsRequired(false);
 
-            entity.HasOne(w => w.Currency)
+            builder.HasOne(w => w.Currency)
                 .WithMany()
                 .HasForeignKey(w => w.CurrencyId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            entity.Property(x => x.CurrencyId)
+            builder.Property(x => x.CurrencyId)
                 .ValueGeneratedNever()
                 .HasConversion(id => id.Value,
                     value => CurrencyId.From(value))
                 .HasColumnType(DefaultColumnType.Nvarchar36);
 
-            entity.HasIndex(w => w.StatusId)
+            builder.HasIndex(w => w.StatusId)
                 .HasDatabaseName("IX_Wallets_StatusId")
                 .IsClustered(false);
         });
