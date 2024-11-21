@@ -1,6 +1,6 @@
-using Microsoft.AspNetCore.Authorization;
 
-namespace EWallet.Api.Common.Wallet.Endpoints;
+
+namespace EWallet.Api.Common.Wallets.EndPoints;
 
 public static class WalletEndPoints
 {
@@ -14,17 +14,17 @@ public static class WalletEndPoints
             try
             {
                 var currencyId = CurrencyId.From(request.CurrencyId);
-                var wallet = Models.Wallet.Create(request.Balance, currencyId);
+                var wallet = Wallet.Create(request.Balance, currencyId);
                 await context.AddAsync(wallet);
                 await context.SaveChangesAsync();
+
+                return Results.Ok();
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                throw;
+                return Results.BadRequest(StatusCodes.Status500InternalServerError);
             }
-
-            return Results.Ok();
         }).AllowAnonymous();
     }
 }
