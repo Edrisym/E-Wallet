@@ -11,7 +11,7 @@ CREATE TABLE [Currencies] (
     );
 
 CREATE TABLE [Wallets] (
-    [Id] uniqueidentifier NOT NULL,
+    [Id] NVARCHAR(36) NOT NULL,
     [Balance] DECIMAL(18,2) NOT NULL,
     [StatusId] int NOT NULL,
     [CurrencyId] NVARCHAR(36) NOT NULL,
