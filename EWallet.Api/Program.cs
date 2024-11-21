@@ -14,6 +14,9 @@ app.UseAuthorization();
 
 
 app.MapWalletsEndpoints();
-app.MapFallback(() => Results.NotFound("Route not found"));
+app.MapCurrencyEndpoints();
+
+app.MapFallback(()
+    => Results.NotFound("Route not found"));
 
 app.Run();
