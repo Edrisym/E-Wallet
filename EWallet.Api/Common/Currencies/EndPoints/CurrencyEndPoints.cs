@@ -20,8 +20,9 @@ public static class CurrencyEndPoints
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                return Results.BadRequest(StatusCodes.Status500InternalServerError);
+                return e.InnerException!.Message.Contains("duplicate")
+                    ? Results.Conflict(ErrorMessages.DuplicateInput)
+                    : Results.BadRequest(StatusCodes.Status500InternalServerError);
             }
         }).AllowAnonymous();
     }
