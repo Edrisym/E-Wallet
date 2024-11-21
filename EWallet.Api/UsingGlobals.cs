@@ -18,8 +18,8 @@ global using EWallet.Api.Common.Exceptions;
 global using EWallet.Api.Common.Models;
 global using DefaultColumnType = EWallet.Api.Common.StaticData.WalletDbContextDefaultColumnType;
 global using SchemaTable = EWallet.Api.Common.StaticData.TableName;
-global using EWallet.Api.Common.Dto;
-global using EWallet.Api.Common.Wallet.Endpoints;
+global using EWallet.Api.Common.Currencies.EndPoints;
+global using EWallet.Api.Common.Wallets.EndPoints;
 
 #endregion
 
