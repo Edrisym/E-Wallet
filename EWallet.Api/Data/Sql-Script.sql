@@ -1,4 +1,3 @@
-
 BEGIN TRANSACTION;
 CREATE TABLE [Currencies] (
     [Id] NVARCHAR(36) NOT NULL,
@@ -23,6 +22,8 @@ CREATE TABLE [Wallets] (
     );
 
 CREATE NONCLUSTERED INDEX [IX_Currencies_Code] ON [Currencies] ([Code]);
+
+CREATE UNIQUE INDEX [IX_Currencies_Code_Name] ON [Currencies] ([Code], [Name]);
 
 CREATE INDEX [IX_Wallets_CurrencyId] ON [Wallets] ([CurrencyId]);
 
