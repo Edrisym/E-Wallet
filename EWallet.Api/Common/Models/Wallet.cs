@@ -7,7 +7,7 @@ public class Wallet
     }
 
     private const decimal InitialBalance = 1.0m;
-    public Guid Id { get; private set; }
+    public WalletId Id { get; private set; }
     public decimal Balance { get; private set; }
     public int StatusId { get; private set; }
 
@@ -45,7 +45,7 @@ public class Wallet
 
         return new Wallet
         {
-            Id = Guid.NewGuid(),
+            Id = WalletId.NewId(),
             Balance = balance,
             CurrencyId = currencyId,
             StatusId = (int)initialStatus,
