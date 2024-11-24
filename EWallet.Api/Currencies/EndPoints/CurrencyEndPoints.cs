@@ -1,4 +1,4 @@
-namespace EWallet.Api.Common.Currencies.EndPoints;
+namespace EWallet.Api.Currencies.EndPoints;
 
 public static class CurrencyEndPoints
 {
@@ -16,7 +16,7 @@ public static class CurrencyEndPoints
                 await context.AddRangeAsync(currency);
                 await context.SaveChangesAsync();
 
-                return Results.Ok(currency.Id);
+                return Results.Created();
             }
             catch (Exception e)
             {
