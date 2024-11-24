@@ -1,16 +1,10 @@
-global using System.IdentityModel.Tokens.Jwt;
-global using System.Security.Claims;
-global using System.Text;
-global using Microsoft.IdentityModel.Tokens;
-global using Microsoft.AspNetCore.Mvc;
-
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddTransient<AuthService>();
 var app = builder.Build();
 app.UseHttpsRedirection();
-app.MapPost("/login", ([FromBody] User user, AuthService service) =>
+app.MapPost("/login", ([FromBody] User? user, AuthService service) =>
 {
-    if (user is null)
+    if (user != null)
     {
         return service.Create(user);
     }
