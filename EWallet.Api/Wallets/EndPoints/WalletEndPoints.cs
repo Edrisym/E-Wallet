@@ -1,6 +1,4 @@
-
-
-namespace EWallet.Api.Common.Wallets.EndPoints;
+namespace EWallet.Api.Wallets.EndPoints;
 
 public static class WalletEndPoints
 {
@@ -18,7 +16,7 @@ public static class WalletEndPoints
                 await context.AddAsync(wallet);
                 await context.SaveChangesAsync();
 
-                return Results.Ok();
+                return Results.Created();
             }
             catch (Exception e)
             {
