@@ -8,10 +8,14 @@ public class Wallet
 
     private const decimal InitialBalance = 1.0m;
     public WalletId Id { get; private set; }
+
+    [Required]
     public decimal Balance { get; private set; }
     public int StatusId { get; private set; }
 
+    [Required]
     public CurrencyId CurrencyId { get; private set; }
+
     public Currency Currency { get; private set; }
     public DateTime? ModifiedOnUtc { get; private set; }
     public DateTime CreatedOnUtc { get; private set; }
