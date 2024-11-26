@@ -1,3 +1,5 @@
 namespace EWallet.Api.Wallets.EndPoints;
 
-public record WalletDto(decimal Balance, Guid CurrencyId);
+public record WalletDto(
+    [Required] decimal Balance,
+    [Required] Guid CurrencyId);
