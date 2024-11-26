@@ -21,6 +21,7 @@ global using SchemaTable = EWallet.Api.Common.StaticData.TableName;
 global using ErrorMessages = EWallet.Api.Common.StaticData.ErrorMessages;
 global using EWallet.Api.Currencies.EndPoints;
 global using EWallet.Api.Wallets.EndPoints;
+global using System.ComponentModel.DataAnnotations;
 
 #endregion
 
