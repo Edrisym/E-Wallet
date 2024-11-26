@@ -7,8 +7,16 @@ public class Currency
     }
 
     public CurrencyId Id { get; private set; }
+    
+    [Required]
+    [StringLength(100)]
     public string Name { get; private set; }
+    
+    [Required]
+    [StringLength(10)]
     public string Code { get; private set; }
+
+    [Required]
     public decimal Ratio { get; private set; }
 
     public DateTime? ModifiedOnUtc { get; private set; }
