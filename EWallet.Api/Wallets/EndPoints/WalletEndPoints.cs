@@ -20,9 +20,9 @@ public static class WalletEndPoints
             }
             catch (Exception e)
             {
-                return e.InnerException!.Message.Contains("duplicate")
-                    ? Results.Conflict(ErrorMessages.DuplicateInput)
-                    : Results.BadRequest(StatusCodes.Status500InternalServerError);
+                if (e.InnerException!.Message.Contains("duplicate"))
+                    return Results.Conflict(ErrorMessages.DuplicateInput);
+                return Results.BadRequest(StatusCodes.Status500InternalServerError);
             }
         }).AllowAnonymous();
     }
