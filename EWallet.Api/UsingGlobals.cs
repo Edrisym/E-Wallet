@@ -13,7 +13,6 @@ global using Microsoft.AspNetCore.Authentication.JwtBearer;
 #region EWallet
 
 global using EWallet.Api.Common.Extensions;
-global using EWallet.Api.Common;
 global using EWallet.Api.Common.Exceptions;
 global using EWallet.Api.Common.Models;
 global using DefaultColumnType = EWallet.Api.Common.StaticData.WalletDbContextDefaultColumnType;
