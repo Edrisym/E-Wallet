@@ -1,3 +1,5 @@
+namespace EWallet.Api.Common.Extensions;
+
 public static class AuthExtensions
 {
     public static IServiceCollection AddCustomAuthentication(this IServiceCollection services,
