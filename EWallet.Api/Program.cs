@@ -1,4 +1,3 @@
-using System.Security.Authentication;
 using EWallet.Infrastructure.ExceptionHandler;
 using Figgle;
 
@@ -27,3 +26,7 @@ app.MapFallback(()
     => Results.NotFound("Route not found"));
 
 app.Run();
+
+public partial class Program
+{
+}
