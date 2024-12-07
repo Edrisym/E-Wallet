@@ -7,9 +7,9 @@ public class Transaction
     }
 
     public static Transaction Create(
-        CurrencyId currencyId,
-        WalletId senderWalletId,
-        WalletId receiverWalletId,
+        string currencyId,
+        string senderWalletId,
+        string receiverWalletId,
         decimal amount)
     {
         return new Transaction
@@ -24,9 +24,9 @@ public class Transaction
     }
 
     public TransactionId Id { get; private set; }
-    public CurrencyId CurrencyId { get; private set; }
-    public WalletId SenderWalletId { get; private set; }
-    public WalletId ReceiverWalletId { get; private set; }
+    public string CurrencyId { get; private set; }
+    public string SenderWalletId { get; private set; }
+    public string ReceiverWalletId { get; private set; }
     public decimal Amount { get; private set; }
 
     public DateTime CreatedOnUtc { get; private set; }
