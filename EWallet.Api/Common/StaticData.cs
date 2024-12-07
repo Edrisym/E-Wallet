@@ -11,6 +11,7 @@ public abstract class StaticData
     {
         public const string Wallets = "Wallets";
         public const string Currencies = "Currencies";
+        public const string Transactions = "Transactions";
     }
 
     public static class WalletDbContextDefaultColumnType
