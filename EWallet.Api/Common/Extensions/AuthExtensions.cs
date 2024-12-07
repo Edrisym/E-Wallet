@@ -29,8 +29,8 @@ public static class AuthExtensions
     public static IServiceCollection AddCustomAuthorization(this IServiceCollection services)
     {
         services.AddAuthorizationBuilder()
-            .AddPolicy(IdentityStaticData.AdminUserPolicyName,
-                policy => policy.RequireClaim(IdentityStaticData.AdminUserClaimName));
+            .AddPolicy("developer",
+                policy => policy.RequireClaim("developer"));
 
         return services;
     }

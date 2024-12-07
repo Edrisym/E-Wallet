@@ -1,5 +1,15 @@
+using Microsoft.EntityFrameworkCore;
+using Wallet_Tests;
+
 public class Wallet_CurrencyTests
 {
+    private readonly DbContextFixture _fixture;
+
+    public Wallet_CurrencyTests()
+    {
+        _fixture = new DbContextFixture();
+    }
+
     private static Currency CreateCurrency(string code = "USD", string name = "United States Dollar",
         decimal ratio = 1.99m)
     {
@@ -38,5 +48,27 @@ public class Wallet_CurrencyTests
     {
         var currency = CreateCurrency();
         currency.Code.Should().NotBeNullOrEmpty();
+    }
+
+
+    [Fact]
+    public async Task InsertUser_ShouldAddUserToDatabase()
+    {
+        await using var context = _fixture.CreateDbContext();
+
+        var currency = CreateCurrency();
+
+        await context.Currencies.AddAsync(currency);
+        await context.SaveChangesAsync();
+
+        var dollar2 = CreateCurrency();
+        var action = async () =>
+        {
+            await context.Currencies.AddAsync(dollar2);
+            await context.SaveChangesAsync();
+        };
+        await action.Should()
+            .ThrowAsync<DbUpdateException>("because the email is unique and cannot be duplicated")
+            .WithMessage("*unique*");
     }
 }

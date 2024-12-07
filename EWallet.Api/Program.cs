@@ -22,8 +22,9 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapWalletsEndpoints();
 app.MapCurrencyEndpoints();
+app.MapGet("/get", () => { }).AllowAnonymous();
 
 app.MapFallback(()
-    => Results.NotFound("Route not found"));
+    => Results.NotFound("Route not found"));    
 
 app.Run();
